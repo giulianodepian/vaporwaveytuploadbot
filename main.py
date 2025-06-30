@@ -1,4 +1,7 @@
 import archivedownloader
+import videocreator
 
 with open("albumList.txt") as albumList:
-    archivedownloader.downloadAlbum(albumList.readline())
+    for album in albumList:
+        archivedownloader.downloadAlbum(album)
+        videocreator.createAlbumVideo(album)
