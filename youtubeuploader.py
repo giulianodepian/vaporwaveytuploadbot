@@ -85,7 +85,7 @@ def get_authenticated_service():
   return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     http=credentials.authorize(httplib2.Http()))
 
-def initialize_upload(youtube, title):
+def initialize_upload(youtube, id, title):
   tags = ["Vaporwave"]
   body=dict(
     snippet=dict(
@@ -95,7 +95,7 @@ def initialize_upload(youtube, title):
       tags = tags
     ),
     status=dict(
-      privacyStatus="private"
+      privacyStatus="public"
     )
   )
 
@@ -114,7 +114,7 @@ def initialize_upload(youtube, title):
     # practice, but if you're using Python older than 2.6 or if you're
     # running on App Engine, you should set the chunksize to something like
     # 1024 * 1024 (1 megabyte).
-    media_body=MediaFileUpload(title + ".mp4", chunksize=-1, resumable=True)
+    media_body=MediaFileUpload(id + ".mp4", chunksize=-1, resumable=True)
   )
 
   resumable_upload(insert_request)
@@ -150,11 +150,11 @@ def resumable_upload(insert_request):
       print ("Sleeping %f seconds and then retrying..." % sleep_seconds)
       time.sleep(sleep_seconds)
 
-def uploadAlbum(youtube, title):
+def uploadAlbum(youtube, id, title):
 
-  if not os.path.exists(title + ".mp4"):
+  if not os.path.exists(id + ".mp4"):
     exit("Please specify a valid file using the --file= parameter.")
   try:
-    initialize_upload(youtube, title)
+    initialize_upload(youtube, id, title)
   except (HttpError, e):
     print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))

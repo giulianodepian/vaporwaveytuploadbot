@@ -7,9 +7,9 @@ import shutil
 with open("albumList.txt") as albumList:
     youtube = youtubeuploader.get_authenticated_service()
     for album in albumList:
-        formattedAlbum = album.strip()
-        archivedownloader.downloadAlbum(formattedAlbum)
-        videocreator.createAlbumVideo(formattedAlbum)
-        youtubeuploader.uploadAlbum(youtube, formattedAlbum)
-        shutil.rmtree(formattedAlbum, ignore_errors=True)
-        os.remove(formattedAlbum + ".mp4")
+        formattedId = album.strip()
+        archivedownloader.downloadAlbum(formattedId)
+        videocreator.createAlbumVideo(formattedId)
+        youtubeuploader.uploadAlbum(youtube, formattedId, archivedownloader.getAlbumTitleAndCreator(formattedId))
+        shutil.rmtree(formattedId, ignore_errors=True)
+        os.remove(formattedId + ".mp4")
