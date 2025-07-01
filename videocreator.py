@@ -19,7 +19,8 @@ def createAlbumVideo(id):
         for audio in p.glob("*.flac"):
             tracks.append(AudioFileClip(audio))
         finalTrack = concatenate_audioclips(tracks)
-        finalVideo = ImageClip("./" + id + "/cover_itemimage.jpg", duration=finalTrack.duration)
+        for image in p.glob("*cover_itemimage*"):
+            finalVideo = ImageClip(image, duration=finalTrack.duration)
         finalVideo = finalVideo.with_audio(finalTrack)
         finalVideo.write_videofile(id + ".mp4", fps=30)
     else:
