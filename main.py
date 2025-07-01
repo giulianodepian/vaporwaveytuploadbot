@@ -20,7 +20,7 @@ def formatTimeStamps(timeStamp):
     minutes = timeStamp // 60
     seconds = timeStamp % 60
     
-    return str(int(seconds)) + ":" + "{:02d}".format(int(seconds))
+    return str(minutes) + ":" + "{:02d}".format(int(seconds))
 
 with open("albumList.txt") as albumList:
     youtube = youtubeuploader.get_authenticated_service()
