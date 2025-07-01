@@ -85,12 +85,12 @@ def get_authenticated_service():
   return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     http=credentials.authorize(httplib2.Http()))
 
-def initialize_upload(youtube, id, title):
+def initialize_upload(youtube, id, title, videoDesc):
   tags = ["Vaporwave"]
   body=dict(
     snippet=dict(
       title=title,
-      description="",
+      description=videoDesc,
       categoryId="10",
       tags = tags
     ),
@@ -150,11 +150,11 @@ def resumable_upload(insert_request):
       print ("Sleeping %f seconds and then retrying..." % sleep_seconds)
       time.sleep(sleep_seconds)
 
-def uploadAlbum(youtube, id, title):
+def uploadAlbum(youtube, id, title, videoDesc):
 
   if not os.path.exists(id + ".mp4"):
     exit("Please specify a valid file using the --file= parameter.")
   try:
-    initialize_upload(youtube, id, title)
-  except (HttpError, e):
+    initialize_upload(youtube, id, title, videoDesc)
+  except HttpError as e:
     print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))

@@ -16,6 +16,8 @@ def createAlbumVideo(id):
         p = Path(id)
 
         tracks = []
+        tracksTimeStamps = []
+        totalTimeInSeconds = 0
         for audio in p.glob("*.flac"):
             tracks.append(AudioFileClip(audio))
         finalTrack = concatenate_audioclips(tracks)
@@ -23,6 +25,10 @@ def createAlbumVideo(id):
             finalVideo = ImageClip(image, duration=finalTrack.duration)
         finalVideo = finalVideo.with_audio(finalTrack)
         finalVideo.write_videofile(id + ".mp4", fps=30)
+        for track in tracks:
+            tracksTimeStamps.append(totalTimeInSeconds)
+            totalTimeInSeconds += track.duration
+        return tracksTimeStamps
     else:
         print("Video Already Exist")
     
