@@ -26,9 +26,16 @@ with open("albumList.txt") as albumList:
     youtube = youtubeuploader.get_authenticated_service()
     for album in albumList:
         formattedId = album.strip()
-        archivedownloader.downloadAlbum(formattedId)
-        tracksTimestamps = videocreator.createAlbumVideo(formattedId)
-        youtubeuploader.uploadAlbum(youtube, formattedId, archivedownloader.getAlbumTitleAndCreator(formattedId), createVideoDescription(tracksTimestamps, formattedId))
-        shutil.rmtree(formattedId, ignore_errors=True)
-        os.remove(formattedId + ".mp4")
+        try:
+            archivedownloader.downloadAlbum(formattedId)
+            tracksTimestamps = videocreator.createAlbumVideo(formattedId)
+            youtubeuploader.uploadAlbum(youtube, formattedId, archivedownloader.getAlbumTitleAndCreator(formattedId), createVideoDescription(tracksTimestamps, formattedId))
+            shutil.rmtree(formattedId, ignore_errors=True)
+            os.remove(formattedId + ".mp4")
+        except:
+            print("Album " + formattedId + " Failed!")
+            if Path(formattedId).is_dir():
+                shutil.rmtree(formattedId, ignore_errors=True)
+            ##if Path(formattedId + ".mp4").is_file():
+                ##os.remove(formattedId + ".mp4")
 
