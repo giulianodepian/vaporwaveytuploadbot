@@ -24,10 +24,14 @@ def createAlbumVideo(id):
         for track in tracks:
             tracksTimeStamps.append(int(totalTimeInSeconds))
             totalTimeInSeconds += track.duration
-        for image in p.glob("*cover_itemimage*"):
-            finalVideo = ImageClip(image, duration=finalTrack.duration)
+        images = list(p.glob("*cover*.*"))
+        if []:
+            finalVideo = ImageClip(images[0], duration=finalTrack.duration)
+        else:
+            images = list(p.glob("*folder*.*"))
+            finalVideo = ImageClip(images[0], duration=finalTrack.duration)
         finalVideo = finalVideo.with_audio(finalTrack)
-        finalVideo.write_videofile(id + ".mp4", fps=30)
+        finalVideo.write_videofile(id + ".mp4", fps=30, logger=None)
 
         return tracksTimeStamps
     else:
