@@ -4,6 +4,7 @@
 ### Personal ###
 client_secrets.json
 personalSecret.json
+lists/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
