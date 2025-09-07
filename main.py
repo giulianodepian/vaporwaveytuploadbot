@@ -23,10 +23,14 @@ def formatTimeStamps(timeStamp):
     hour = 0
     
     if (minutes >= 60):
+        tempMinutes = minutes
         minutes = minutes % 60
-        hour = 1
     
-    if (hour == 1):
+        while (tempMinutes >= 60):
+            hour += 1
+            tempMinutes = tempMinutes / 60
+    
+    if (hour > 0):
         return str(hour) + ":" + "{:02d}".format(int(minutes)) + ":" + "{:02d}".format(int(seconds))
     
     return str(minutes) + ":" + "{:02d}".format(int(seconds))
