@@ -5,6 +5,8 @@
 client_secrets.json
 personalSecret.json
 lists/
+albumList.txt
+albumListManual.txt
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

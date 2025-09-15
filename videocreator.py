@@ -8,6 +8,7 @@ from moviepy import (
     concatenate_audioclips
 )
 from pathlib import Path
+import glob
 
 def createAlbumVideo(id, listOfTracks):
     p = Path(id)
@@ -15,7 +16,7 @@ def createAlbumVideo(id, listOfTracks):
     tracksTimeStamps = []
     totalTimeInSeconds = 0
     for track in listOfTracks:
-        tracks.append(AudioFileClip(list(p.glob("*" + track + ".flac"))[0]))
+        tracks.append(AudioFileClip(list(p.glob("*" + glob.escape(track) + ".flac"))[0]))
     ##for audio in p.glob("*.flac"):
     ##    tracks.append(AudioFileClip(audio))
     finalTrack = concatenate_audioclips(tracks)
